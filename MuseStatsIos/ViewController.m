@@ -24,20 +24,25 @@
 - (void)updateMellow:(IXNMuseDataPacket *)packet
 {
     NSLog(@"Mellow: %@", packet.values[0]);
-    NSString *valuestring = (@"%d",packet.values[0]);
-    CGFloat alpha = 0.3 + (0.7) * ([valuestring floatValue] - 0);
-    //[self.mData setText:(@"%@", packet.values[0])];
-    _mellowView.alpha = alpha;
+    
+    NSNumber *value = packet.values[0];
+    float valueF = [value floatValue];
+    CGFloat alpha = 0.3 + (0.7) * (valueF - 0);
+    _mellowView.backgroundColor = [_mellowView.backgroundColor colorWithAlphaComponent:alpha];
+    
+    [self.mData setText:[NSString stringWithFormat:@"%f", valueF]];
 }
 
 - (void)updateConcentration:(IXNMuseDataPacket *)packet
 {
     NSLog(@"Concentration: %@", packet.values[0]);
-    NSString *valuestring = (@"%d",packet.values[0]);
-    CGFloat alpha = 0.3 + (0.7) * ([valuestring floatValue] - 0);
-    //[self.cData setText:(@"%@", packet.values[0])];
-    _concentrationView.alpha = alpha;
     
+    NSNumber *value = packet.values[0];
+    float valueF = [value floatValue];
+    CGFloat alpha = 0.3 + (0.7) * (valueF - 0);
+    _concentrationView.backgroundColor = [_concentrationView.backgroundColor colorWithAlphaComponent:alpha];
+    
+    [self.cData setText:[NSString stringWithFormat:@"%f", valueF]];
 }
 
 -(void)updateQuantization:(IXNMuseDataPacket *)packet
@@ -53,8 +58,6 @@
                 if (read < 3) {
                     circle.hidden = NO;
                 }
-//                CGFloat alpha = 0 + (1/16)*([value floatValue] - 16);
-//                circle.alpha = alpha;
             }
         }
     }
